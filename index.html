@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exploinfinty</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Firebase Configuration script -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js" nonce="MTA3OTM5NTE4MiwyMDQ4NzcxODk="></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js" nonce="MTA3OTM5NTE4MiwyMDQ4NzcxODk="></script>
+    <script nonce="MTA3OTM5NTE4MiwyMDQ4NzcxODk=">
+        // Firebase Configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyDAK9qm9bvG8qpfcFB67-Jv3Nkuq94KqNY",
+          authDomain: "exploinfinty.firebaseapp.com",
+          databaseURL: "https://exploinfinty-default-rtdb.firebaseio.com",
+          projectId: "exploinfinty",
+          storageBucket: "exploinfinty.firebasestorage.app",
+          messagingSenderId: "517596365989",
+          appId: "1:517596365989:web:f3bb51cd8e84a1b132b94c",
+          measurementId: "G-ZNRWC4TPW8"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        const productsRef = db.collection("cards");
+
+        productsRef.get().then((snapshot) => {
+          const firestoreDataContainer = document.getElementById("firestore-data");
+
+          snapshot.docs.forEach((doc) => {
+            const product = doc.data();
+            console.log(product); // Log the data to the console
+
+            // Create a new card for each product
+            const productElement = `
+              <div class="card">
+            <a href='https://postimages.org/' target='_blank'><img src='https://i.postimg.cc/Z5pxfYKf/0d289d95-38e7-47e9-a803-59d0a9399730.jpg' border='0' alt='0d289d95-38e7-47e9-a803-59d0a9399730'/></a>    <p class="dic-code">1234-5678-ABCD</p>
+                <div class="details">
+                  <h3>${product.title}</h3>
+                  <p>Price: $${product.description}</p>
+                </div>
+                <div class="button-group">
+                  <button>View Details</button>
+                  <button>Download</button>
+                </div>
+              </div>
+            `;
+
+            // Append the card to the container
+            firestoreDataContainer.innerHTML += productElement;
+          });
+        });
+    </script>
+</head>
+<body>
+    <h1>Welcome to Exploinfinty</h1>
+    <p>Search</p>
+
+    <!-- Firestore data will be injected here -->
+    <div id="firestore-data" class="cards-container"></div>
+
+    <footer>
+        <p>&copy; Exploinfinty.com</p>
+    </footer>
+</body>
+</html>
